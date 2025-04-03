@@ -1,121 +1,74 @@
-import java.util.Scanner;
-
 public class PayrollSystem {
 
     // Employee class to store employee information
     static class Employee {
         String employeeNumber;
-        String name;
+        String lastName;
+        String firstName;
         String birthday;
-        String position;
-        int hoursWorked;
-        double hourlyRate;
-
-        // Fixed deductions
-        static final double SSS_DEDUCTION = 1125;
-        static final double PHILHEALTH_DEDUCTION = 375;
-        static final double PAG_IBIG_DEDUCTION = 100;
-        static final double TAX_EXEMPTION = 20833; // Taxable income limit
+        double basicSalary;
 
         // Constructor
-        public Employee(String employeeNumber, String name, String birthday, String position, int hoursWorked, double hourlyRate) {
+        public Employee(String employeeNumber, String lastName, String firstName, String birthday, double basicSalary) {
             this.employeeNumber = employeeNumber;
-            this.name = name;
+            this.lastName = lastName;
+            this.firstName = firstName;
             this.birthday = birthday;
-            this.position = position;
-            this.hoursWorked = hoursWorked;
-            this.hourlyRate = hourlyRate;
+            this.basicSalary = basicSalary;
         }
 
-        // Calculate Gross Salary
-        public double calculateGrossSalary() {
-            return this.hoursWorked * this.hourlyRate;
-        }
-
-        // Total Deductions
-        public double calculateTotalDeductions() {
-            return SSS_DEDUCTION + PHILHEALTH_DEDUCTION + PAG_IBIG_DEDUCTION;
-        }
-
-        // Taxable Income
-        public double calculateTaxableIncome(double grossSalary) {
-            return grossSalary - calculateTotalDeductions();
-        }
-
-        // Withholding Tax (20% in excess of ₱20,833)
-        public double calculateWithholdingTax(double taxableIncome) {
-            if (taxableIncome > TAX_EXEMPTION) {
-                return (taxableIncome - TAX_EXEMPTION) * 0.20;
-            } else {
-                return 0;
-            }
-        }
-
-        // Calculate Net Salary
-        public double calculateNetSalary(double grossSalary, double totalDeductions, double withholdingTax) {
-            return grossSalary - totalDeductions - withholdingTax;
-        }
-
-        // Display Employee Details
+        // Display employee details
         public void displayEmployeeDetails() {
-            double grossSalary = calculateGrossSalary();
-            double totalDeductions = calculateTotalDeductions();
-            double taxableIncome = calculateTaxableIncome(grossSalary);
-            double withholdingTax = calculateWithholdingTax(taxableIncome);
-            double netSalary = calculateNetSalary(grossSalary, totalDeductions, withholdingTax);
-
-            System.out.println("\n==================== EMPLOYEE PAYROLL SUMMARY ====================");
             System.out.println("Employee Number: " + this.employeeNumber);
-            System.out.println("Employee Name  : " + this.name);
-            System.out.println("Position       : " + this.position);
-            System.out.println("Birthday       : " + this.birthday);
-            System.out.println("Hours Worked   : " + this.hoursWorked);
-            System.out.println("Hourly Rate    : ₱ " + String.format("%.2f", this.hourlyRate));
-            System.out.println("----------------------------------------------------------------");
-            System.out.println("Gross Salary   : ₱ " + String.format("%.2f", grossSalary));
-            System.out.println("----------------------------------------------------------------");
-            System.out.println("Deductions:");
-            System.out.println("SSS Deduction      : ₱ " + String.format("%.2f", SSS_DEDUCTION));
-            System.out.println("PhilHealth Deduction: ₱ " + String.format("%.2f", PHILHEALTH_DEDUCTION));
-            System.out.println("Pag-IBIG Deduction  : ₱ " + String.format("%.2f", PAG_IBIG_DEDUCTION));
-            System.out.println("Total Deductions    : ₱ " + String.format("%.2f", totalDeductions));
-            System.out.println("----------------------------------------------------------------");
-            System.out.println("Taxable Income      : ₱ " + String.format("%.2f", taxableIncome));
-            System.out.println("Withholding Tax (20% in excess of ₱20,833): ₱ " + String.format("%.2f", withholdingTax));
-            System.out.println("----------------------------------------------------------------");
-            System.out.println("Net Salary         : ₱ " + String.format("%.2f", netSalary));
-            System.out.println("================================================================");
+            System.out.println("Employee Name: " + this.firstName + " " + this.lastName);
+            System.out.println("Birthday: " + this.birthday);
+            System.out.println("Basic Salary: ₱" + String.format("%.2f", this.basicSalary)); // Added peso sign here
+            System.out.println("---------------------------------------------------------");
         }
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Employee[] employees = {
+            new Employee("10001", "Garcia", "Manuel III", "10/11/1983", 90000),
+            new Employee("10002", "Lim", "Antonio", "06/19/1988", 60000),
+            new Employee("10003", "Aquino", "Bianca Sofia", "08/04/1989", 60000),
+            new Employee("10004", "Reyes", "Isabella", "06/16/1994", 60000),
+            new Employee("10005", "Hernandez", "Eduard", "09/23/1989", 52670),
+            new Employee("10006", "Villanueva", "Andrea Mae", "02/14/1988", 52670),
+            new Employee("10007", "San Jose", "Brad", "03/15/1996", 42975),
+            new Employee("10008", "Romualdez", "Alice", "05/14/1992", 22500),
+            new Employee("10009", "Atienza", "Rosie", "09/24/1948", 22500),
+            new Employee("10010", "Alvaro", "Roderick", "03/30/1988", 52670),
+            new Employee("10011", "Salcedo", "Anthony", "09/14/1993", 50825),
+            new Employee("10012", "Lopez", "Josie", "01/14/1987", 38475),
+            new Employee("10013", "Farala", "Martha", "01/11/1942", 24000),
+            new Employee("10014", "Martinez", "Leila", "07/11/1970", 24000),
+            new Employee("10015", "Romualdez", "Fredrick", "03/10/1985", 53500),
+            new Employee("10016", "Mata", "Christian", "10/21/1987", 42975),
+            new Employee("10017", "De Leon", "Selena", "02/20/1975", 41850),
+            new Employee("10018", "San Jose", "Allison", "06/24/1986", 22500),
+            new Employee("10019", "Rosario", "Cydney", "10/06/1996", 22500),
+            new Employee("10020", "Bautista", "Mark", "02/12/1991", 23250),
+            new Employee("10021", "Lazaro", "Darlene", "11/25/1985", 23250),
+            new Employee("10022", "Delos Santos", "Kolby", "02/26/1980", 24000),
+            new Employee("10023", "Santos", "Vella", "12/31/1983", 22500),
+            new Employee("10024", "Del Rosario", "Tomas", "12/18/1978", 24000),
+            new Employee("10025", "Tolentino", "Jacklyn", "05/19/1984", 24750),
+            new Employee("10026", "Gutierrez", "Percival", "12/18/1970", 24750),
+            new Employee("10027", "Manalaysay", "Garfield", "08/28/1986", 24000),
+            new Employee("10028", "Villegas", "Lizeth", "12/12/1981", 22500),
+            new Employee("10029", "Ramos", "Carol", "08/20/1978", 22500),
+            new Employee("10030", "Maceda", "Emelia", "04/14/1973", 24000),
+            new Employee("10031", "Aguilar", "Delia", "01/27/1989", 24750),
+            new Employee("10032", "Castro", "John Rafael", "02/09/1992", 24750),
+            new Employee("10033", "Martinez", "Carlos Ian", "11/16/1990", 24000),
+            new Employee("10034", "Santos", "Beatriz", "08/07/1990", 24750)
+        };
 
-        // Getting employee details from the user
-        System.out.println("Enter Employee Number: ");
-        String employeeNumber = scanner.nextLine();
-
-        System.out.println("Enter Employee Name: ");
-        String name = scanner.nextLine();
-
-        System.out.println("Enter Position: ");
-        String position = scanner.nextLine();
-
-        System.out.println("Enter Employee Birthday (MM/DD/YYYY): ");
-        String birthday = scanner.nextLine();
-
-        System.out.println("Enter Hours Worked in a Week: ");
-        int hoursWorked = scanner.nextInt();
-
-        System.out.println("Enter Hourly Rate (₱): ");
-        double hourlyRate = scanner.nextDouble();
-
-        // Create an Employee object
-        Employee employee = new Employee(employeeNumber, name, birthday, position, hoursWorked, hourlyRate);
-
-        // Display employee details and calculate salary
-        employee.displayEmployeeDetails();
-
-        scanner.close();
+        // Display employee details
+        System.out.println("\n================ Employee Details ================");
+        for (Employee emp : employees) {
+            emp.displayEmployeeDetails();
+        }
     }
 }
